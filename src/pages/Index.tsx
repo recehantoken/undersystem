@@ -35,7 +35,7 @@ const Index = () => {
         this.directionX = (Math.random() - 0.5) * 2;
         this.directionY = (Math.random() - 0.5) * 2;
         this.size = Math.random() * 2 + 1;
-        this.color = Math.random() > 0.5 ? '#33C3F0' : '#000000';
+        this.color = '#33C3F0'; // Changed to single blue color
       }
 
       draw() {
@@ -71,7 +71,8 @@ const Index = () => {
     // Animation
     const animate = () => {
       if (!ctx) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#000000'; // Changed background to black
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Update particles
       for (let i = 0; i < particleArray.length; i++) {
@@ -87,7 +88,7 @@ const Index = () => {
 
           if (distance < 150) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(51, 195, 240, ${(150 - distance) / 150 * 0.2})`;
+            ctx.strokeStyle = `rgba(51, 195, 240, ${(150 - distance) / 150 * 0.2})`; // Changed to blue with opacity
             ctx.lineWidth = 1;
             ctx.moveTo(particleArray[i].x, particleArray[i].y);
             ctx.lineTo(particleArray[j].x, particleArray[j].y);
@@ -107,14 +108,14 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-white">
+    <div className="relative min-h-screen w-full overflow-hidden bg-black">
       <canvas
         ref={canvasRef}
         className="absolute top-0 left-0 w-full h-full"
       />
       <div className="relative z-10 flex min-h-screen items-center justify-center">
         <div className="text-center animate-fade-in">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-black">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white">
             undersystem.net
           </h1>
         </div>
