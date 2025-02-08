@@ -32,9 +32,9 @@ const Index = () => {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.directionX = (Math.random() - 0.5) * 1.5; // Slightly slower movement
-        this.directionY = (Math.random() - 0.5) * 1.5; // Slightly slower movement
-        this.size = Math.random() * 3 + 1; // Increased particle size range
+        this.directionX = (Math.random() - 0.5) * 1; // Even slower movement for more stable connections
+        this.directionY = (Math.random() - 0.5) * 1; // Even slower movement for more stable connections
+        this.size = Math.random() * 2 + 1; // Slightly smaller particles for better performance
         this.color = '#33C3F0';
       }
 
@@ -62,7 +62,7 @@ const Index = () => {
 
     // Create particle array
     const particleArray: Particle[] = [];
-    const numberOfParticles = Math.min(200, (canvas.width * canvas.height) / 15000); // Increased number of particles
+    const numberOfParticles = Math.min(300, (canvas.width * canvas.height) / 10000); // Significantly increased particle density
 
     for (let i = 0; i < numberOfParticles; i++) {
       particleArray.push(new Particle());
@@ -86,10 +86,10 @@ const Index = () => {
           const dy = particleArray[i].y - particleArray[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 200) { // Increased connection distance
+          if (distance < 250) { // Increased connection distance for more connections
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(51, 195, 240, ${(200 - distance) / 200 * 0.3})`; // Increased line opacity
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = `rgba(51, 195, 240, ${(250 - distance) / 250 * 0.4})`; // Increased line opacity
+            ctx.lineWidth = 0.8; // Slightly thinner lines for better visual
             ctx.moveTo(particleArray[i].x, particleArray[i].y);
             ctx.lineTo(particleArray[j].x, particleArray[j].y);
             ctx.stroke();
