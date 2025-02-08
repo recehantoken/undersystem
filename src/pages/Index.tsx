@@ -32,10 +32,10 @@ const Index = () => {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.directionX = (Math.random() - 0.5) * 2;
-        this.directionY = (Math.random() - 0.5) * 2;
-        this.size = Math.random() * 2 + 1;
-        this.color = '#33C3F0'; // Changed to single blue color
+        this.directionX = (Math.random() - 0.5) * 1.5; // Slightly slower movement
+        this.directionY = (Math.random() - 0.5) * 1.5; // Slightly slower movement
+        this.size = Math.random() * 3 + 1; // Increased particle size range
+        this.color = '#33C3F0';
       }
 
       draw() {
@@ -62,7 +62,7 @@ const Index = () => {
 
     // Create particle array
     const particleArray: Particle[] = [];
-    const numberOfParticles = Math.min(100, (canvas.width * canvas.height) / 25000);
+    const numberOfParticles = Math.min(200, (canvas.width * canvas.height) / 15000); // Increased number of particles
 
     for (let i = 0; i < numberOfParticles; i++) {
       particleArray.push(new Particle());
@@ -71,7 +71,7 @@ const Index = () => {
     // Animation
     const animate = () => {
       if (!ctx) return;
-      ctx.fillStyle = '#000000'; // Changed background to black
+      ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Update particles
@@ -86,9 +86,9 @@ const Index = () => {
           const dy = particleArray[i].y - particleArray[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 150) {
+          if (distance < 200) { // Increased connection distance
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(51, 195, 240, ${(150 - distance) / 150 * 0.2})`; // Changed to blue with opacity
+            ctx.strokeStyle = `rgba(51, 195, 240, ${(200 - distance) / 200 * 0.3})`; // Increased line opacity
             ctx.lineWidth = 1;
             ctx.moveTo(particleArray[i].x, particleArray[i].y);
             ctx.lineTo(particleArray[j].x, particleArray[j].y);
