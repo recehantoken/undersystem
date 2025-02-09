@@ -24,6 +24,18 @@ export default defineConfig(({ mode }) => ({
     'process.env': {},
     global: {},
   },
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        },
+      },
+    },
+  },
   optimizeDeps: {
     esbuildOptions: {
       define: {
