@@ -3,7 +3,6 @@ import { useEffect, useRef } from 'react';
 
 const Index = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const matrixCanvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -108,88 +107,10 @@ const Index = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const canvas = matrixCanvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Set canvas size
-    const setCanvasSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    setCanvasSize();
-    window.addEventListener('resize', setCanvasSize);
-
-    // Matrix characters
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
-    const fontSize = 16;
-    const columns = Math.floor(canvas.width / fontSize);
-    const drops: number[] = [];
-
-    // Initialize drops
-    for (let i = 0; i < columns; i++) {
-      drops[i] = Math.random() * -100; // Start above the canvas
-    }
-
-    const draw = () => {
-      // Create gradient for fade out effect
-      const gradient = ctx.createLinearGradient(0, canvas.height * 0.7, 0, canvas.height);
-      gradient.addColorStop(0, 'rgba(51, 195, 240, 1)');
-      gradient.addColorStop(1, 'rgba(51, 195, 240, 0)');
-
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.font = `${fontSize}px monospace`;
-
-      for (let i = 0; i < drops.length; i++) {
-        // Get random character
-        const char = characters[Math.floor(Math.random() * characters.length)];
-        
-        // Calculate y position
-        const y = drops[i] * fontSize;
-
-        // Apply gradient based on position
-        if (y > canvas.height * 0.7) {
-          ctx.fillStyle = gradient;
-        } else {
-          ctx.fillStyle = '#33C3F0';
-        }
-
-        // Draw character
-        ctx.fillText(char, i * fontSize, y);
-
-        // Reset drop when it reaches bottom or randomly
-        if (y > canvas.height || Math.random() > 0.99) {
-          drops[i] = 0;
-        }
-
-        // Move drop down
-        drops[i]++;
-      }
-
-      requestAnimationFrame(draw);
-    };
-
-    draw();
-
-    return () => {
-      window.removeEventListener('resize', setCanvasSize);
-    };
-  }, []);
-
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-black">
       <canvas
         ref={canvasRef}
-        className="absolute top-0 left-0 w-full h-full"
-      />
-      <canvas
-        ref={matrixCanvasRef}
         className="absolute top-0 left-0 w-full h-full"
       />
       <div className="relative z-10 flex min-h-screen items-center justify-center">
